@@ -1,0 +1,69 @@
+<% layout("/layouts/boilerplate")%>
+
+  <body>
+    <div class="row">
+      <div class="col-8 offset-2">
+        <br>
+        <h3>Create New Listing</h3>
+        <br>
+        <form action="/listings" method="POST" novalidate class="needs-validation">
+          <div class="mb-1">
+            <label for="title" class="form-label">Title:</label>
+            <input type="text" id="title" name="listing[title]" required class="form-control" required/>
+
+            <div class="invalid-feedback">
+              Title Should be Valid!
+            </div>
+          </div>
+
+          <div class="mb-1">
+            <label for="description" class="form-label">Description:</label>
+            <textarea id="description" name="listing[description]" rows="4" cols="40" required
+              class="form-control"></textarea>
+
+            <div class="invalid-feedback">
+              Description Should be short!
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="mb-1 col-md-4">
+              <label for="price" class="form-label">Price:</label>
+              <input type="number" id="price" name="listing[price]" required class="form-control" />
+              <div class="invalid-feedback">
+                Price Should be Valid!
+              </div>
+            </div>
+
+            <div class="mb-1 col-md-8">
+              <label for="country" class="form-label">Country:</label>
+              <input type="text" id="country" name="listing[country]" required class="form-control" />
+
+              <div class="invalid-feedback">
+                Country Should be Valid!
+              </div>
+            </div>
+
+
+          </div>
+
+
+          <div class="mb-1">
+            <label for="location" class="form-label">Location:</label>
+            <input type="text" id="location" name="listing[location]" required class="form-control" />
+            <div class="invalid-feedback">
+              Location Should be Valid!
+            </div>
+          </div>
+
+          <div class="mb-1">
+            <label for="image" class="form-label">Image URL:</label>
+            <input type="text" id="image" name="listing[image]" class="form-control"  required/><br>
+          </div>
+          <button type="submit" class="btn btn-dark add-btn">ADD Listing</button><br><br>
+        </form>
+
+      </div>
+    </div>
+  </body>
