@@ -32,17 +32,19 @@ router.get('/new',isLoggedIn,(req,res)=>{
 //show route
 router.get('/:id',wrapAsync(async(req,res)=>{
     const {id} = req.params
-    let listing = await Listing.findById(id).populate("reviews")
+    let listing = await Listing.findById(id).populate("reviews").populate("owner")
     if(!listing){
         req.flash("error","Listing You Requested For Does Not Exists")
         res.redirect('/listings')
     }
+    console.log(listing)
     res.render('listings/show',{listing})
 }))
 
 //create Route
 router.post('/',validateListing,isLoggedIn, wrapAsync(async(req,res)=>{   
     const newlisting = new Listing(req.body.listing)
+    newlisting.owner = req.user._id // to add new listing onwer
     await newlisting.save()
     req.flash("success","New Listing Created!")
     res.redirect('/listings')

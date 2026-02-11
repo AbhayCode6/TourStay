@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Review = require('./review')
+const User = require('./user.js')
 
 const listingSchema = new Schema({
   title: {
@@ -26,7 +27,11 @@ const listingSchema = new Schema({
       type : Schema.Types.ObjectId,
       ref : "Review"
     }
-  ]
+  ],
+  owner : {
+    type : Schema.Types.ObjectId,
+    ref : "User"
+  },
 });
 
 //post mongoose middleware(to delete listing reviews)
@@ -37,4 +42,4 @@ listingSchema.post('findOneAndDelete',async(listing)=>{
 })
 
 const Listing = mongoose.model('Listing', listingSchema);
-module.exports = Listing;
+module.exports = Listing
