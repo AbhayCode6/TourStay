@@ -4,14 +4,14 @@ const Review = require('../models/review')
 const wrapAsync = require('../utils/wrapAsync.js')
 const ExpressError = require('../utils/ExpressError.js')
 const Listing = require('../models/listings')
-const {validateReview,isLoggedIn} = require('../middleware.js')
+const {validateReview,isLoggedIn,isReviewAuthor} = require('../middleware.js')
 
 
 router.post('/',isLoggedIn,validateReview,wrapAsync(async(req,res)=>{
     let listing = await Listing.findById(req.params.id)
     let newreview = new Review(req.body.review)
 
-    newreview.author = req.user._id
+    newreview.owner = req.user._id
     listing.reviews.push(newreview)
     req.flash("success","New Review Added!")
 
@@ -22,7 +22,7 @@ router.post('/',isLoggedIn,validateReview,wrapAsync(async(req,res)=>{
 }))
 
 //Delete Review
-router.delete('/:reviewId',wrapAsync(async(req,res)=>{
+router.delete('/:reviewId',isLoggedIn,isReviewAuthor,wrapAsync(async(req,res)=>{
     let {id,reviewId} = req.params
 
     await Listing.findByIdAndUpdate(id,{$pull :{reviews: reviewId}})
