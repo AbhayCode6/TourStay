@@ -9,6 +9,7 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const User = require('./models/user.js')
 const {isLoggedIn} = require("./middleware.js")
+const multer = require('multer')
 
 // const Review = require('./models/review')
 
@@ -67,14 +68,14 @@ app.use((req,res,next)=>{
 })
 
 //demo user check
-app.get('/demouser',async(req,res)=>{
-    let fakeuser = {
-        username : "Abhay",
-        email : "abc@gmail.com"
-    }
-    let registeruser = await User.register(fakeuser,"hello World")
-    res.send(registeruser)
-})
+// app.get('/demouser',async(req,res)=>{
+//     let fakeuser = {
+//         username : "Abhay",
+//         email : "abc@gmail.com"
+//     }
+//     let registeruser = await User.register(fakeuser,"hello World")
+//     res.send(registeruser)
+// })
 
 
 app.use('/listings',listingRouter)

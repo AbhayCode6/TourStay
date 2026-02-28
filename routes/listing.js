@@ -3,7 +3,8 @@ const router = express.Router()
 const Listing = require('../models/listings')
 const wrapAsync = require('../utils/wrapAsync.js')
 const {isLoggedIn,isOwner,validateListing} = require("../middleware.js")
-
+const multer = require('multer')
+const upload = multer({dest:"uploads/"})
 
 //index Route
 router.get('/',wrapAsync(async(req,res)=>{
@@ -34,10 +35,11 @@ router.get('/:id',wrapAsync(async(req,res)=>{
 }))
 
 //create Route
-router.post('/',validateListing,isLoggedIn, wrapAsync(async(req,res)=>{   
+router.post('/',validateListing,isLoggedIn,upload.single("listing[image]"), wrapAsync(async(req,res)=>{   
     const newlisting = new Listing(req.body.listing)
     newlisting.owner = req.user._id // to add new listing onwer
     await newlisting.save()
+    console.log(req.file) //to check file
     req.flash("success","New Listing Created!")
     res.redirect('/listings')
 }))
