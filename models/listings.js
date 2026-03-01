@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Review = require('./review')
-const User = require('./user.js')
+const User = require('./user.js');
+const { string } = require('joi');
 
 const listingSchema = new Schema({
   title: {
@@ -10,14 +11,8 @@ const listingSchema = new Schema({
   },
   description: String,
   image: {
-    filename: {
-      type: String,
-      default: "default.jpg"
-    },
-    url: {
-      type: String,
-      default: "https://images.unsplash.com/photo-1736618625630-e74054b9b54d?ixlib=rb-4.1.0&auto=format&fit=crop&q=80&w=687"
-    }
+    url : String,
+    filename : String
   },
   price: Number,
   location: String,

@@ -36,9 +36,13 @@ router.get('/:id',wrapAsync(async(req,res)=>{
 }))
 
 //create Route
-router.post('/',validateListing,isLoggedIn,upload.single("listing[image]"), wrapAsync(async(req,res)=>{   
+router.post('/',isLoggedIn,upload.single("listing[image]"), validateListing,wrapAsync(async(req,res)=>{   
+    let url = req.file.path
+    let filename = req.file.filename
     const newlisting = new Listing(req.body.listing)
     newlisting.owner = req.user._id // to add new listing onwer
+    
+    newlisting.image = {url,filename}
     await newlisting.save()
     console.log(req.file) //to check file
     req.flash("success","New Listing Created!")
