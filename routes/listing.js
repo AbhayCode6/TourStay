@@ -55,17 +55,26 @@ router.get('/:id/edit',isLoggedIn,isOwner,wrapAsync(async(req,res)=>{
     let listing = await Listing.findById(id)
     if(!listing){
         req.flash("error","Listing You Requested For Does Not Exists")
-        res.redirect('/listings')
+        return res.redirect('/listings')
     }
     res.render('listings/edit',{listing})
 }))
 
 //update Route
-router.put('/:id',isLoggedIn,isOwner,validateListing,wrapAsync(async(req,res)=>{
+router.put('/:id',isLoggedIn,isOwner,upload.single("listing[image]"), validateListing,wrapAsync(async(req,res)=>{
     let {id}= req.params
 
-    Listing.findById(id)
-    await Listing.findByIdAndUpdate(id,{...req.body.listing})
+    let listing = await Listing.findByIdAndUpdate(
+      id,
+      { ...req.body.listing },
+      { new: true }   //return updated document
+    );
+    if( typeof req.file !=='undefined'){
+    let url = req.file.path
+    let filename = req.file.filename
+    listing.image = {url,filename}
+    await listing.save()
+    }
     req.flash("success","Listing Updated!")
     res.redirect(`/listings/${id}`)
 }))

@@ -6,14 +6,15 @@
         <br>
         <h3>Create New Listing</h3>
         <br>
-        <form action="/listings/<%=listing._id%>?_method=PUT" method="POST" novalidate class="needs-validation">
+        <form action="/listings/<%=listing._id%>?_method=PUT" method="POST" novalidate class="needs-validation"
+          enctype="multipart/form-data">
 
           <div class="mb-3">
             <label for="title" class="form-label">Title:</label>
             <input type="text" id="title" name="listing[title]" value="<%=listing.title%>" required
               class="form-control" />
 
-              <div class="invalid-feedback">
+            <div class="invalid-feedback">
               Title Should be Valid!
             </div>
           </div>
@@ -22,7 +23,7 @@
             <label for="description" class="form-label">Description:</label>
             <textarea id="description" name="listing[description]" rows="4" cols="40" required
               class="form-control"><%=listing.description%></textarea>
-               <div class="invalid-feedback">
+            <div class="invalid-feedback">
               Description Should be short!
             </div>
           </div>
@@ -32,18 +33,18 @@
               <label for="price" class="form-label">Price:</label>
               <input type="number" id="price" name="listing[price]" value="<%=listing.price%>" required
                 class="form-control" />
-                 <div class="invalid-feedback">
-              Price Should be Valid!
-            </div>
+              <div class="invalid-feedback">
+                Price Should be Valid!
+              </div>
             </div>
 
             <div class="mb-3 col-md-8">
               <label for="country" class="form-label">Country:</label>
               <input type="text" id="country" name="listing[country]" value="<%=listing.country%>" required
                 class="form-control" />
-                 <div class="invalid-feedback">
-              Country Should be Valid!
-            </div>
+              <div class="invalid-feedback">
+                Country Should be Valid!
+              </div>
             </div>
           </div>
 
@@ -52,16 +53,14 @@
             <input type="text" id="location" name="listing[location]" value="<%=listing.location%>" required
               class="form-control" />
 
-               <div class="invalid-feedback">
+            <div class="invalid-feedback">
               Location Should be Valid!
             </div>
           </div>
 
           <div class="mb-3">
-            <label for="image" class="form-label">Image URL:</label>
-            <input type="text" id="image" name="listing[image][url]" value="<%= listing.image?.url %>" 
-              class="form-control" />
-            <input type="hidden" name="listing[image][filename]" value="<%= listing.image.filename %>" />
+            <label for="image" class="form-label">Upload New Image:</label>
+            <input type="file" id="image" name="listing[image]" class="form-control" />
           </div>
 
           <button type="submit" class="btn btn-dark edit-btn">Edit This Listing</button>
