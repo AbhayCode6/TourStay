@@ -57,7 +57,9 @@ router.get('/:id/edit',isLoggedIn,isOwner,wrapAsync(async(req,res)=>{
         req.flash("error","Listing You Requested For Does Not Exists")
         return res.redirect('/listings')
     }
-    res.render('listings/edit',{listing})
+    let originalImage = listing.image.url
+    originalImage = originalImage.replace('/upload','/upload/h_300,w_250')
+    res.render('listings/edit',{listing,originalImage})
 }))
 
 //update Route
