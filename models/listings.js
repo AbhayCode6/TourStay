@@ -27,6 +27,10 @@ const listingSchema = new Schema({
     type : Schema.Types.ObjectId,
     ref : "User"
   },
+  // category:{ when to add funtionalities according to the filters
+  //   type : String,
+  //   enum : ["mountain","snow","desert","farm","rooms"]
+  // }
 });
 
 //post mongoose middleware(to delete listing reviews)
