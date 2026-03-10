@@ -10,7 +10,7 @@ const upload = multer({storage})
 //index Route
 router.get('/',wrapAsync(async(req,res)=>{
    let allListing =await Listing.find({})
-   res.render('listings/index', { allListing });
+   res.render('listings/index', { allListing, category: null});
    console.log("Working..")
 }))
 
@@ -18,6 +18,14 @@ router.get('/',wrapAsync(async(req,res)=>{
 router.get('/new',isLoggedIn,(req,res)=>{
     res.render('listings/new')
 })
+
+// category filter route
+router.get("/category/:category",  wrapAsync (async (req, res) => {
+  let { category } = req.params;
+  const allListing = await Listing.find({ category })
+  res.render("listings/index", { allListing, category })
+}))
+
 
 //show route
 router.get('/:id',wrapAsync(async(req,res)=>{
@@ -80,6 +88,9 @@ router.put('/:id',isLoggedIn,isOwner,upload.single("listing[image]"), validateLi
     req.flash("success","Listing Updated!")
     res.redirect(`/listings/${id}`)
 }))
+
+
+
 
 //delete route
 router.delete('/:id',isLoggedIn,isOwner,wrapAsync(async(req,res)=>{

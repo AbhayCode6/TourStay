@@ -15,7 +15,7 @@ async function connectDb(){
 }
 
 const initDB = async ()=>{
-    await Listing.deleteMany({})
+    // await Listing.deleteMany({})
    const formattedData = initData.map((obj) => ({
     ...obj,
     owner: "698ca6805b26f2d94b1396d5"
